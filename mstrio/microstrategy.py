@@ -169,7 +169,7 @@ class Connection:
             else:
                 return parsejson(response=json_response)
 
-    def create_dataset(self, data_frame, dataset_name, table_name, to_metric=None, to_attribute=None):
+    def create_dataset(self, data_frame, dataset_name, table_name, to_metric=None, to_attribute=None, folder_id=None):
         """
         Create an in-memory MicroStrategy dataset from a Pandas Data Frame
 
@@ -183,6 +183,7 @@ class Connection:
         the corresponding column name as \code{to_metric=c('myStringIntegers')}
         :param to_attribute: (optional) Logical opposite of to_metric. Helpful for formatting an integer-based row
         identifier as a primary key in the dataset
+        :param folder_id: (optional) ID of the folder the dataset will be saved to. It will be saved to 'My Reports' if a specific folder is not specified.
         :return: Unique identifiers of the dataset and table within the newly created dataset. Required for
         update_dataset()
         """
@@ -206,7 +207,8 @@ class Connection:
                                                        'columnHeaders': column_headers,
                                                        'data': data_encoded}],
                                            'attributes': attribute_list,
-                                           'metrics': metric_list}))
+                                           'metrics': metric_list,
+                                           'folderId': folder_id}))
 
         # Create dataset
         response = datasets.create_dataset(connection=self, json_body=json_body)
