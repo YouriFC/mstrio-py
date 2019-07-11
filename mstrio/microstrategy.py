@@ -6,7 +6,7 @@
 import json
 from base64 import b64encode
 import pandas as pd
-from mstrio.api import projects, cubes, reports, authentication, datasets
+from mstrio.api import projects, cubes, reports, authentication, datasets, folders
 from mstrio.utils.parsejson import parsejson
 from mstrio.utils.formjson import formjson
 
@@ -187,6 +187,18 @@ class Connection:
         :return: Unique identifiers of the dataset and table within the newly created dataset. Required for
         update_dataset()
         """
+
+        # Fetch the list of projects the user has access to
+        if folder_id != None:
+            response = folders.folders(folder_id=folder_id, connection=self)
+
+            if not response.ok:
+                # print error message
+                errmsg = json.loads(response.content)
+                print("folder_id error.")
+                print("HTTP %i %s" % (response.status_code, response.reason))
+                print("I-Server Error %s, %s" % (errmsg['code'], errmsg['message']))
+                return
 
         # Replace any leading/trailing whitespace in df names, replace '.' with '_'
         _df = data_frame.copy()
