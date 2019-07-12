@@ -29,14 +29,14 @@ report_dataframe = conn.get_report(report_id='06D1F3A411E869C3DE670080EF259221')
 ```
 
 #### Upload data to MicroStrategy
-Creating a new in-memory dataset from a Pandas DataFrame is just as easy: `create_dataset()`. You'll need to provide a name for your cube and a name for the table that will contain the data. At this time, only one table per cube is supported. `create_cube()` will return the datasetID and tableIDs, in case you want to save these for later use.
+Creating a new in-memory dataset from a Pandas DataFrame is just as easy: `create_dataset()`. You'll need to provide a name for your cube and a name for the table that will contain the data. At this time, only one table per cube is supported. Specify a folder ID to select a folder within the selected project to create your dataset in. If this field is left empty, the dataset will be created under 'My Projects' by default.  `create_dataset()` will return the datasetID and tableIDs, in case you want to save these for later use.
 
 ```python
 import pandas as pd
 raw_data = {'name': ['Bill', 'Betsy', 'Bailey'],
             'age': [45, 23, 31]}
 df = pd.DataFrame(raw_data, columns=['name', 'age'])
-newDatasetId, newTableId = conn.create_dataset(data_frame=df, dataset_name='Employees', table_name='Ages')
+newDatasetId, newTableId = conn.create_dataset(data_frame=df, dataset_name='Employees', table_name='Ages', folder_id='6754D7F64A716FE5CD40289333C68148')
 ```
 
 #### Add or update a dataset with new data
