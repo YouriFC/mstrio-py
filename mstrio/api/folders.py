@@ -5,6 +5,7 @@ def folders(connection, folder_id, verbose=False):
     """
 
     :param connection: MicroStrategy REST API connection object
+    :param folder_id: Folder ID of which to verify existence & access.
     :param verbose: Verbosity of request response; defaults to False
     :return: Complete HTTP response object
     """
